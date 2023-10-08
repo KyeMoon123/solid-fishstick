@@ -1,0 +1,51 @@
+{
+  "name": "fullstack-graphql-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev",
+    "type-check": "turbo run type-check",
+    "codegen:graphql": "turbo run codegen:graphql",
+    "dev:frontend": "turbo run dev --filter=frontend...",
+    "test:frontend": "turbo run test --filter=frontend",
+    "test:watch": "turbo run test:watch",
+    "lint:frontend": "turbo run lint --filter=frontend",
+    "build:frontend^...": "turbo run build --filter=frontend^...",
+    "type-check:frontend": "turbo run type-check --filter=frontend",
+    "type-check:frontend^...": "turbo run type-check --filter=frontend^...",
+    "build:backend": "turbo run build --filter=backend",
+    "build:backend^...": "turbo run build --filter=backend^...",
+    "dev:ui": "turbo run dev --filter=ui",
+    "type-check:ui": "turbo run type-check --filter=ui",
+    "build:ui": "turbo run build --filter=ui",
+    "dev:validation-schema": "turbo run dev --filter=validation-schema",
+    "type-check:validation-schema": "turbo run type-check --filter=validation-schema",
+    "build:validation-schema": "turbo run build --filter=validation-schema",
+    "lint:backend": "turbo run lint --filter=backend",
+    "type-check:backend": "turbo run type-check --filter=backend"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "prettier": "2.8.7",
+    "prettier-plugin-tailwindcss": "^0.2.2",
+    "turbo": "1.9.3"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "3.2.7"
+  },
+  "packageManager": "pnpm@7.26.3"
+}

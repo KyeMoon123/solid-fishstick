@@ -1,0 +1,69 @@
+name: CI BE
+on: push
+
+jobs:
+  test:
+    name: Link, Type check, Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Prune
+        run: npx turbo prune --scope=backend
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v3
+        with:
+          path: out/node_modules/.cache/turbo # workaround see: https://github.com/vercel/turborepo/issues/451
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-
+
+      - name: Install dependencies
+        working-directory: ./out
+        run: pnpm install
+
+      - name: Build dependencies
+        working-directory: ./out
+        run: pnpm run build:backend^...
+
+      - name: Lint
+        working-directory: ./out
+        run: pnpm run lint:backend
+
+      - name: Type-check
+        working-directory: ./out
+        run: pnpm run type-check:backend
+
+      - name: Build
+        working-directory: ./out
+        run: pnpm run build:backend

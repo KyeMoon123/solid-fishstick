@@ -1,0 +1,63 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+directive @auth(role: Role! = USER) on FIELD_DEFINITION
+
+directive @isOwner(ownerField: String) on FIELD_DEFINITION | OBJECT
+
+type Mutation {
+  completeTodo(id: ID!): Todo @auth
+  saveTodo(todo: TodoInput!): Todo @auth
+  saveUser(user: UserInput!): User
+}
+
+union ProfileResult = User | UserNotFound
+
+type Query {
+  allTodos: [Todo!]! @auth(role: ADMIN)
+  allUsers: [User!]! @auth
+  currentUser: User @auth
+  getProfile: ProfileResult @auth
+  time: Int!
+  todo(id: ID!): Todo @auth
+  todosByCurrentUser: [Todo!]! @auth
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+type Todo @isOwner(ownerField: "authorId") {
+  author: User
+  authorId: String!
+  completed: Boolean!
+  content: String
+  createdAt: String
+  id: ID!
+  title: String!
+  updatedAt: String
+}
+
+input TodoInput {
+  content: String
+  title: String!
+}
+
+type User {
+  email: String! @isOwner(ownerField: "id")
+  id: ID!
+  name: String
+  role: Role!
+}
+
+input UserInput {
+  name: String!
+}
+
+type UserNotFound {
+  message: String!
+  role: Role!
+}

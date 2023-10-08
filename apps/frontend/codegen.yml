@@ -1,0 +1,19 @@
+overwrite: true
+schema: '../backend/src/api/graphql/typeDefs.ts'
+documents:
+  - './src/**/!(*.d).{ts,tsx}'
+  - './src/**/*.graphql'
+
+generates:
+  src/generated/:
+    preset: gql-tag-operations-preset
+    # plugins:
+    #   - typescript
+    #   - typescript-operations
+    #   - typed-document-node
+
+  src/generated/schema.graphql:
+    plugins:
+      - schema-ast
+    config:
+      includeDirectives: true

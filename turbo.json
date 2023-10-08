@@ -1,0 +1,20 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/main",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["type-check", "^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "lint": {},
+    "type-check": {
+      "dependsOn": ["^type-check"]
+    },
+    "test": {
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {},
+    "dev": { "cache": false, "persistent": true },
+    "codegen:graphql": { "cache": false }
+  }
+}
