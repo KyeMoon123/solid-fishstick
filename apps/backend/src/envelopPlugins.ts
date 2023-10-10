@@ -96,11 +96,11 @@ export const envelopPlugins = [
       }
     },
   }),
-  useGenericAuth({
-    resolveUserFn: resolveUserFn,
-    validateUser: validateUserFn,
-    mode: 'protect-granular',
-  }),
+  // useGenericAuth({
+  //   resolveUserFn: resolveUserFn,
+  //   validateUser: validateUserFn,
+  //   mode: 'protect-granular',
+  // }),
   useExtendContext(createContext), // should be after auth0 so that createContext callback can access to auth0 context
   useOwnerCheck(),
   useMaskedErrors(),

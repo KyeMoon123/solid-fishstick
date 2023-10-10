@@ -80,9 +80,9 @@ export function CurrentUserProvider({
   console.log('isOnboarded', isOnboarded)
 
   if (isAuthenticated && !isOnboarded) {
-    if (router.pathname !== '/onboarding') {
-      router.replace('/onboarding')
-    }
+    // if (router.pathname !== '/onboarding') {
+    //   router.replace('/onboarding')
+    // }
   }
 
   return (

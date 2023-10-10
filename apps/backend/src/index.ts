@@ -1,7 +1,6 @@
 import fastifyCompress from '@fastify/compress'
 import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
-import { renderGraphiQL } from '@graphql-yoga/render-graphiql'
 import fastify, { FastifyReply, FastifyRequest } from 'fastify'
 // import { createServer } from '@graphql-yoga/node'
 import { createYoga } from 'graphql-yoga'
@@ -15,9 +14,11 @@ const app = fastify({ logger: true })
 
 app.register(fastifyCors, {
   origin: clientUrl,
+  allowedHeaders: "Content-Type, Authorization",
 })
 app.register(fastifyHelmet, {
   contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
 })
 app.register(fastifyCompress)
 
@@ -33,16 +34,7 @@ const yoga = createYoga<{
     warn: (...args) => args.forEach((arg) => app.log.warn(arg)),
     error: (...args) => args.forEach((arg) => app.log.error(arg)),
   },
-  graphiql:
-    process.env.NODE_ENV !== 'production'
-      ? {
-          defaultQuery: /* GraphQL */ `
-            query {
-              time # health check
-            }
-          `,
-        }
-      : false,
+  graphiql: process.env.NODE_ENV !== 'production',
 })
 
 app.route({

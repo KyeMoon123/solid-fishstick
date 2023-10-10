@@ -26,9 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN || ''}
         clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID || ''}
         audience={process.env.NEXT_PUBLIC_AUTH0_AUDIENCE || ''}
-        redirectUri={
-          typeof window !== 'undefined' ? window.location.origin : undefined
-        }
+        redirectUri={"http://localhost:3000/"}
       >
         <UrqlClientProvider>
           <CurrentUserProvider>

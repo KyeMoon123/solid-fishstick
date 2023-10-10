@@ -31,9 +31,9 @@ const authCheckExchange: Exchange =
               (err) => err?.extensions?.code === 'NOT_AUTHENTICATED'
             )
           ) {
-            if (window.location.pathname !== '/signin') {
-              window.location.replace('/signin')
-            }
+            // if (window.location.pathname !== '/signin') {
+            //   window.location.replace('/signin')
+            // }
           }
 
           if (
@@ -87,7 +87,7 @@ export function UrqlClientProvider({
 
       setClient(
         createClient({
-          url: process.env.NEXT_PUBLIC_GRAPHQL_END_POINT as string,
+          url: "http://localhost:5001/graphql",
           exchanges: exchanges,
           requestPolicy: 'cache-first',
           fetchOptions: () => ({

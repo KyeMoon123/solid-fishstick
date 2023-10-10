@@ -16,28 +16,26 @@ services:
       AUTH0_AUDIENCE:
       AUTH0_CLIENT_ID:
       DATABASE_URL:
-    depends_on:
-      - db
 
-  db:
-    image: mysql:latest
-    command: --lower_case_table_names=1
-    volumes:
-      - ./docker/db/data:/var/lib/mysql
-      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-    ports:
-      - '3306:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: fga
-      MYSQL_PASSWORD: fga
-      MYSQL_DATABASE: fga
-    # healthcheck:
-    #   test: mysqladmin ping -h127.0.0.1 -P3306 -u$$MYSQL_USER -p$$MYSQL_PASSWORD
-    #   interval: 10s
-    #   timeout: 10s
-    #   retries: 10
-    #   start_period: 10s
+#  db:
+#    image: mysql:latest
+#    command: --lower_case_table_names=1
+#    volumes:
+#      - ./docker/db/data:/var/lib/mysql
+#      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+#    ports:
+#      - '3306:3306'
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_USER: fga
+#      MYSQL_PASSWORD: fga
+#      MYSQL_DATABASE: fga
+#    # healthcheck:
+#    #   test: mysqladmin ping -h127.0.0.1 -P3306 -u$$MYSQL_USER -p$$MYSQL_PASSWORD
+#    #   interval: 10s
+#    #   timeout: 10s
+#    #   retries: 10
+#    #   start_period: 10s
 
 volumes:
   node_modules:

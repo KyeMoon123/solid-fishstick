@@ -2,7 +2,7 @@
   "name": "validation-schema",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index",
+  "main": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
